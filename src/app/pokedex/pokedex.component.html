@@ -1,0 +1,12 @@
+<p>pokedex works!</p>
+
+<h1>Lucario for Testing</h1>
+
+<div class="fs-3 px-5 mx-5" *ngIf="this.lucario">
+  <p>{{this.lucario.name}}</p>
+  <p>{{this.lucario.id}}</p>
+  <div *ngFor="let abilities of this.lucario.abilities">
+    <p>{{abilities.ability.name}}</p>
+    <div *ngIf="abilities.isHidden">Hidden</div>
+  </div>
+</div>
