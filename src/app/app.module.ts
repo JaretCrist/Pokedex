@@ -11,7 +11,12 @@ import { PokemonComponent } from './pokedex/pokemon/pokemon.component';
 import { BackgroundImageComponent } from './background-image/background-image.component';
 
 @NgModule({
-  declarations: [AppComponent, PokedexComponent, PokemonComponent, BackgroundImageComponent],
+  declarations: [
+    AppComponent,
+    PokedexComponent,
+    PokemonComponent,
+    BackgroundImageComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,

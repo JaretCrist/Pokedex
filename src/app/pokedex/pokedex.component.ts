@@ -11,29 +11,30 @@ import { tap } from 'rxjs';
 export class PokedexComponent implements OnInit {
   constructor(private httpClient: HttpClient, private router: Router) {}
 
-  allData: any;
-  lucario: any;
+  allData: {
+    count: number;
+    namesList: string[];
+  } = { count: 0, namesList: [] };
 
   ngOnInit(): void {
     this.httpClient
       .get('https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0')
       .pipe(
         tap((results) => {
-          this.allData = results;
+          this.apiMap(results);
           console.log(this.allData);
         })
       )
       .subscribe();
+  }
 
-    this.httpClient
-      .get('https://pokeapi.co/api/v2/pokemon/448/')
-      .pipe(
-        tap((results) => {
-          this.lucario = results;
-          console.log(this.lucario);
-        })
-      )
-      .subscribe();
+  apiMap(data: any): void {
+    this.allData = {
+      count: data.count,
+      namesList: data.results.map(
+        (element: { name: string; url: string }) => element.name
+      ),
+    };
   }
 
   navigate(dexNum: number): void {

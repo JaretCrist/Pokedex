@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, filter, mergeMap, of, tap } from 'rxjs';
-import { Pokemon, pokemonCache } from '../pokemon.service';
+import { Pokemon, PokemonCache } from '../pokemon.service';
 
 @Component({
   selector: 'app-pokemon',
@@ -13,7 +13,8 @@ export class PokemonComponent implements OnInit {
   constructor(
     private httpClient: HttpClient,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private pokemonCache: PokemonCache
   ) {}
 
   allData: Pokemon | null = null;
@@ -35,10 +36,12 @@ export class PokemonComponent implements OnInit {
           if (data) {
             this.allData = this.dataMap(data);
             if (this.currentPokemon) {
-              console.log(this.currentPokemon, typeof this.currentPokemon);
               const tempNum = Number(this.currentPokemon);
-              if (!isNaN(tempNum) && !pokemonCache[tempNum]) {
-                pokemonCache[tempNum] = this.allData;
+              if (
+                !isNaN(tempNum) &&
+                !this.pokemonCache.pokcemonCache[tempNum]
+              ) {
+                this.pokemonCache.pokcemonCache[tempNum] = this.allData;
               }
             }
           } else {
