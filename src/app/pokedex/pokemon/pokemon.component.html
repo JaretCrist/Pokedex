@@ -1,1 +1,6 @@
-<p>pokemon works!</p>
+<div *ngIf="this.allData">
+  <div>{{this.allData.name}}</div>
+  <div>{{this.allData.id}}</div>
+</div>
+
+<button (click)="returnPage()">GO BACK</button>

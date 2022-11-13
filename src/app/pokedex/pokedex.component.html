@@ -1,12 +1,17 @@
-<p>pokedex works!</p>
+<div id="background">
 
-<h1>Lucario for Testing</h1>
+  <h1 class="h1 fs-1">Pokédex</h1>
+  <h1>Lucario for Testing</h1>
 
-<div class="fs-3 px-5 mx-5" *ngIf="this.lucario">
-  <p>{{this.lucario.name}}</p>
-  <p>{{this.lucario.id}}</p>
+
+  
+  <div class="fs-3 px-5 mx-5" *ngIf="this.lucario">
+    <p>{{this.lucario.name}}</p>
+  <p (click)="navigate(this.lucario.id)">{{this.lucario.id}}</p>
   <div *ngFor="let abilities of this.lucario.abilities">
     <p>{{abilities.ability.name}}</p>
     <div *ngIf="abilities.isHidden">Hidden</div>
   </div>
+</div>
+
 </div>

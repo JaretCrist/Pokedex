@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { tap } from 'rxjs';
 
 @Component({
@@ -8,7 +9,7 @@ import { tap } from 'rxjs';
   styleUrls: ['./pokedex.component.scss'],
 })
 export class PokedexComponent implements OnInit {
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient, private router: Router) {}
 
   allData: any;
   lucario: any;
@@ -33,5 +34,9 @@ export class PokedexComponent implements OnInit {
         })
       )
       .subscribe();
+  }
+
+  navigate(dexNum: number): void {
+    this.router.navigateByUrl(`/Pokedex/${dexNum}`);
   }
 }

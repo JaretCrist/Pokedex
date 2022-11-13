@@ -1,0 +1,48 @@
+#background {
+  background-image: url("../../assets/pokedexImage.jpeg");
+  background-repeat: no-repeat;
+  background-size: 250% 150%;
+  overflow-x: hidden;
+  height: 100vh;
+  background-position: 50% 50%;
+  
+  @media (min-width: 600px) {
+    background-size: 200% 120%;
+  }
+
+  @media (min-width: 1000px) {
+    background-size: 150% 125%;
+  }
+}
+
+.bottom {
+
+  position: absolute;
+  bottom: 10px;
+  text-align: center;
+  width: 100%;
+
+}
+
+
+.centerScreen {
+  position: absolute;
+  top: 9%;
+  bottom:9%;
+  left: 12.5%;
+  right:12.5%;
+
+  @media (min-width: 600px) {
+    top: 17.5%;
+    bottom:17.5%;
+    left: 20%;
+    right:20%;
+  }
+
+  @media (min-width: 1000px) {
+    top: 16.5%;
+    bottom:16.5%;
+    left: 27.25%;
+    right:27.25%;  
+  }
+}
