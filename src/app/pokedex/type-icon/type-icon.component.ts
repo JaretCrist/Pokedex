@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { PokemonCache } from '../pokemon.service';
+import { Pokemon } from '../pokemon.service';
 
 @Component({
   selector: 'app-type-icon',
@@ -8,13 +8,13 @@ import { PokemonCache } from '../pokemon.service';
 })
 export class TypeIconComponent implements OnInit {
   @Input() number = 0;
+  @Input() cached: Pokemon[] = [];
+
   shortenedType1: string | null = null;
   shortenedType2: string | null = null;
 
-  constructor(private pokemonCache: PokemonCache) {}
-
   ngOnInit(): void {
-    if (this.number) {
+    if (this.number && this.cached) {
       this.shortenedType1 = this.initialization(1);
       this.shortenedType2 = this.initialization(2);
     }
@@ -23,11 +23,11 @@ export class TypeIconComponent implements OnInit {
   initialization(slot: number): string | null {
     let temp: string | null = '';
 
-    if (this.pokemonCache.pokemonCache[this.number]) {
+    if (this.cached[this.number]) {
       if (slot == 1) {
-        temp = this.pokemonCache.pokemonCache[this.number].types.slot1;
+        temp = this.cached[this.number].types.slot1;
       } else {
-        temp = this.pokemonCache.pokemonCache[this.number].types.slot2;
+        temp = this.cached[this.number].types.slot2;
       }
     } else {
       temp = slot == 2 ? null : '???';

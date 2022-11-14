@@ -1,19 +1,20 @@
 <div *ngIf="this.allData?.namesList" id="size-constraint">
   <div class="row mx-2 my-1 align-items-center border border-dark bg-info" *ngFor="let pokemon of this.allData.namesList; let index = index" (click)="this.navigate(index + 1)">
-    <div class="col-2">
+    <div class="col-2 fs-6">
         No{{index + 1}}
     </div>
     <div class="col-1">
-      BALL
+      <img src="../../assets/Poké_Ball_icon.svg" *ngIf="this.cacheCopy[index + 1]" class="ballIcon">
+      <img src="../../assets/Poké_Ball_icon_grey.png" *ngIf="!(this.cacheCopy[index + 1])" class="ballIcon">
     </div>
-    <div class="col-3 capitalize">
+    <div class="col-3 fs-6 capitalize">
       {{pokemon}}
     </div>
     <div class="col">
       <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{index + 1}}.png" class="box">
     </div>
     <div class="col-3">
-      <app-type-icon [number]="index + 1"></app-type-icon>
+      <app-type-icon [number]="index + 1" [cached]="this.cacheCopy"></app-type-icon>
     </div>
   </div>
 </div>

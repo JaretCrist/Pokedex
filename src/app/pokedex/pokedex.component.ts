@@ -1,8 +1,18 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { tap } from 'rxjs';
+import { tap, filter } from 'rxjs';
 import { PokemonCache, Pokemon } from './pokemon.service';
+
+interface apiReturn {
+  count: number;
+  results: {
+    name: string;
+    url: string;
+  }[];
+}
+
+const CURRENT_POKEMON_TOTAL = 905;
 
 @Component({
   selector: 'app-pokedex',
@@ -25,9 +35,9 @@ export class PokedexComponent implements OnInit {
 
   ngOnInit(): void {
     this.httpClient
-      .get('https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0')
+      .get<apiReturn>('https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0')
       .pipe(
-        tap((results) => {
+        tap((results: apiReturn) => {
           this.apiMap(results);
         })
       )
@@ -36,12 +46,12 @@ export class PokedexComponent implements OnInit {
     this.cacheCopy = this.pokemonCache.pokemonCache;
   }
 
-  apiMap(data: any): void {
+  apiMap(data: apiReturn): void {
     this.allData = {
       count: data.count,
-      namesList: data.results.map(
-        (element: { name: string; url: string }) => element.name
-      ),
+      namesList: data.results
+        .filter((element, index: number) => index < CURRENT_POKEMON_TOTAL)
+        .map((element: { name: string; url: string }) => element.name),
     };
   }
 
