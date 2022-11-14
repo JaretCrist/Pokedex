@@ -90,7 +90,7 @@ export interface Pokemon {
   providedIn: 'root',
 })
 export class PokemonCache {
-  pokcemonCache: Pokemon[] = [
+  pokemonCache: Pokemon[] = [
     {
       id: 0,
       name: 'MISSINGNO',

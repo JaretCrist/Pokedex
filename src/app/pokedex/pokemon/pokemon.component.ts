@@ -37,11 +37,8 @@ export class PokemonComponent implements OnInit {
             this.allData = this.dataMap(data);
             if (this.currentPokemon) {
               const tempNum = Number(this.currentPokemon);
-              if (
-                !isNaN(tempNum) &&
-                !this.pokemonCache.pokcemonCache[tempNum]
-              ) {
-                this.pokemonCache.pokcemonCache[tempNum] = this.allData;
+              if (!isNaN(tempNum) && !this.pokemonCache.pokemonCache[tempNum]) {
+                this.pokemonCache.pokemonCache[tempNum] = this.allData;
               }
             }
           } else {
@@ -63,7 +60,10 @@ export class PokemonComponent implements OnInit {
       base_experience: data.base_experience,
       height: data.height,
       weight: data.weight,
-      types: data.types,
+      types: {
+        slot1: data.types[0].type.name,
+        slot2: data.types[1]?.type ? data.types[1].type.name : null,
+      },
       stats: {
         hp: {
           base_stat: data.stats[0].base_stat,

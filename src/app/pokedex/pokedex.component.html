@@ -1,19 +1,19 @@
 <div *ngIf="this.allData?.namesList" id="size-constraint">
-  <div class="row mx-2 my-1 border border-dark bg-info" *ngFor="let pokemon of this.allData.namesList; let index = index" (click)="this.navigate(index)">
+  <div class="row mx-2 my-1 align-items-center border border-dark bg-info" *ngFor="let pokemon of this.allData.namesList; let index = index" (click)="this.navigate(index + 1)">
     <div class="col-2">
-      No{{index}}
+        No{{index + 1}}
     </div>
     <div class="col-1">
-      Ball
+      BALL
     </div>
     <div class="col-3 capitalize">
       {{pokemon}}
     </div>
     <div class="col">
-      PICTURE HERE
+      <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{index + 1}}.png" class="box">
     </div>
     <div class="col-3">
-      FLYING NORMAL
+      <app-type-icon [number]="index + 1"></app-type-icon>
     </div>
   </div>
 </div>

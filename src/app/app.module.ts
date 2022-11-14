@@ -9,6 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PokedexComponent } from './pokedex/pokedex.component';
 import { PokemonComponent } from './pokedex/pokemon/pokemon.component';
 import { BackgroundImageComponent } from './background-image/background-image.component';
+import { TypeIconComponent } from './pokedex/type-icon/type-icon.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { BackgroundImageComponent } from './background-image/background-image.co
     PokedexComponent,
     PokemonComponent,
     BackgroundImageComponent,
+    TypeIconComponent,
   ],
   imports: [
     BrowserModule,

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs';
+import { PokemonCache, Pokemon } from './pokemon.service';
 
 @Component({
   selector: 'app-pokedex',
@@ -9,12 +10,18 @@ import { tap } from 'rxjs';
   styleUrls: ['./pokedex.component.scss'],
 })
 export class PokedexComponent implements OnInit {
-  constructor(private httpClient: HttpClient, private router: Router) {}
+  constructor(
+    private httpClient: HttpClient,
+    private router: Router,
+    private pokemonCache: PokemonCache
+  ) {}
 
   allData: {
     count: number;
     namesList: string[];
   } = { count: 0, namesList: [] };
+
+  cacheCopy: Pokemon[] = [];
 
   ngOnInit(): void {
     this.httpClient
@@ -22,10 +29,11 @@ export class PokedexComponent implements OnInit {
       .pipe(
         tap((results) => {
           this.apiMap(results);
-          console.log(this.allData);
         })
       )
       .subscribe();
+
+    this.cacheCopy = this.pokemonCache.pokemonCache;
   }
 
   apiMap(data: any): void {
