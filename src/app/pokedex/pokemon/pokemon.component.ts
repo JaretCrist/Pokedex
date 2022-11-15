@@ -2,7 +2,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, filter, mergeMap, of, tap } from 'rxjs';
-import { Pokemon, PokemonCache } from '../pokemon.service';
+import { Pokemon, PokemonCache, Sprites } from '../pokemon.service';
+import { CURRENT_POKEMON_TOTAL } from '../pokedex.component';
 
 @Component({
   selector: 'app-pokemon',
@@ -19,6 +20,9 @@ export class PokemonComponent implements OnInit {
 
   allData: Pokemon | null = null;
   currentPokemon: string | null = null;
+  picturesList: string[] = [];
+  currentPicIndex = 2;
+  pageView: 'stats' | 'abilities' | 'moves' = 'stats';
 
   ngOnInit(): void {
     this.route.paramMap
@@ -35,6 +39,11 @@ export class PokemonComponent implements OnInit {
         tap((data) => {
           if (data) {
             this.allData = this.dataMap(data);
+            this.picturesList = [];
+            this.pictureInitialize(this.allData.sprites);
+            if (this.allData.sprites.back_female) {
+              this.currentPicIndex = 4;
+            }
             if (this.currentPokemon) {
               const tempNum = Number(this.currentPokemon);
               if (!isNaN(tempNum) && !this.pokemonCache.pokemonCache[tempNum]) {
@@ -97,7 +106,44 @@ export class PokemonComponent implements OnInit {
     return transformedData;
   }
 
+  pictureInitialize(sprites: Sprites): void {
+    for (const value of Object.values(sprites)) {
+      if (value) {
+        if (typeof value === 'string') {
+          this.picturesList.push(value);
+        } else {
+          this.pictureInitialize(value);
+        }
+      }
+    }
+  }
+
+  galleryRotate(direction: 'left' | 'right') {
+    console.log(direction);
+    console.log(this.currentPicIndex);
+    let tempIndex = this.currentPicIndex;
+    if (direction === 'left') {
+      tempIndex--;
+    } else {
+      tempIndex++;
+    }
+
+    if (tempIndex < 0) {
+      this.currentPicIndex = this.picturesList.length - 1;
+    } else if (tempIndex >= this.picturesList.length) {
+      this.currentPicIndex = 0;
+    } else {
+      this.currentPicIndex = tempIndex;
+    }
+    console.log(this.currentPicIndex);
+  }
+
   returnPage(): void {
     this.router.navigateByUrl('Pokedex/National');
+  }
+  navigate(dexNum: number): void {
+    if (0 < dexNum && dexNum <= CURRENT_POKEMON_TOTAL) {
+      this.router.navigateByUrl(`/Pokedex/${dexNum}`);
+    }
   }
 }

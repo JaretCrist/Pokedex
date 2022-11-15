@@ -12,7 +12,7 @@ interface apiReturn {
   }[];
 }
 
-const CURRENT_POKEMON_TOTAL = 905;
+export const CURRENT_POKEMON_TOTAL = 905;
 
 @Component({
   selector: 'app-pokedex',

@@ -1,5 +1,29 @@
 import { Injectable } from '@angular/core';
 
+export interface Sprites {
+  back_default: string | null;
+  back_female: string | null;
+  back_shiny: string | null;
+  back_female_shiny: string | null;
+  front_default: string | null;
+  front_female: string | null;
+  front_shiny: string | null;
+  front_female_shiny: string | null;
+  other: {
+    dream_world: {
+      front_default: string | null;
+      front_female: string | null;
+    };
+    home: {
+      front_default: string | null;
+      front_female: string | null;
+      front_shiny: string | null;
+      front_female_shiny: string | null;
+    };
+    officalArt: string | null;
+  };
+}
+
 export interface Pokemon {
   id: number;
   name: string;
@@ -61,29 +85,7 @@ export interface Pokemon {
       ];
     }
   ];
-  sprites: {
-    back_default: string | null;
-    back_female: string | null;
-    back_shiny: string | null;
-    back_female_shiny: string | null;
-    front_default: string | null;
-    front_female: string | null;
-    front_shiny: string | null;
-    front_female_shiny: string | null;
-    other: {
-      dream_world: {
-        front_default: string | null;
-        front_female: string | null;
-      };
-      home: {
-        front_default: string | null;
-        front_female: string | null;
-        front_shiny: string | null;
-        front_female_shiny: string | null;
-      };
-      officalArt: string | null;
-    };
-  };
+  sprites: Sprites;
 }
 
 @Injectable({
