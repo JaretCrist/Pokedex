@@ -48,6 +48,9 @@ export class PokemonComponent implements OnInit {
             if (this.allData.sprites.back_female) {
               this.currentPicIndex = 4;
             }
+            if (this.currentPicIndex > this.picturesList.length) {
+              this.currentPicIndex = 0;
+            }
             if (this.currentPokemon) {
               const tempNum = Number(this.currentPokemon);
               if (!isNaN(tempNum) && !this.pokemonCache.pokemonCache[tempNum]) {
