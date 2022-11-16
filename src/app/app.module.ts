@@ -10,6 +10,7 @@ import { PokedexComponent } from './pokedex/pokedex.component';
 import { PokemonComponent } from './pokedex/pokemon/pokemon.component';
 import { BackgroundImageComponent } from './background-image/background-image.component';
 import { TypeIconComponent } from './pokedex/type-icon/type-icon.component';
+import { MoveDialogComponent } from './pokedex/pokemon/move-dialog/move-dialog.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { TypeIconComponent } from './pokedex/type-icon/type-icon.component';
     PokemonComponent,
     BackgroundImageComponent,
     TypeIconComponent,
+    MoveDialogComponent,
   ],
   imports: [
     BrowserModule,

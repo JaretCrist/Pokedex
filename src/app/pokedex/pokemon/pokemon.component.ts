@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, filter, mergeMap, of, tap } from 'rxjs';
 import { Pokemon, PokemonCache, Sprites } from '../pokemon.service';
 import { CURRENT_POKEMON_TOTAL } from '../pokedex.component';
+import { MatDialog } from '@angular/material/dialog';
+import { MoveDialogComponent } from './move-dialog/move-dialog.component';
 
 @Component({
   selector: 'app-pokemon',
@@ -15,7 +17,8 @@ export class PokemonComponent implements OnInit {
     private httpClient: HttpClient,
     private route: ActivatedRoute,
     private router: Router,
-    private pokemonCache: PokemonCache
+    private pokemonCache: PokemonCache,
+    private dialog: MatDialog
   ) {}
 
   allData: Pokemon | null = null;
@@ -23,6 +26,7 @@ export class PokemonComponent implements OnInit {
   picturesList: string[] = [];
   currentPicIndex = 2;
   pageView: 'stats' | 'abilities' | 'moves' = 'stats';
+  abilityEffects: string[] = [];
 
   ngOnInit(): void {
     this.route.paramMap
@@ -52,6 +56,46 @@ export class PokemonComponent implements OnInit {
             }
           } else {
             throw new Error('Pokemon not found, no data returned');
+          }
+        }),
+        mergeMap(() => {
+          this.abilityEffects = [];
+          if (this.allData && this.allData.abilities[0]) {
+            return this.httpClient.get(this.allData.abilities[0].ability.url);
+          }
+          return of(true);
+        }),
+        tap((results: any) => {
+          if (typeof results !== 'boolean') {
+            const temp =
+              results.effect_entries[0].language.name === 'en' ? 0 : 1;
+            this.abilityEffects.push(results.effect_entries[temp].effect);
+          }
+        }),
+        mergeMap(() => {
+          if (this.allData && this.allData.abilities[1]) {
+            return this.httpClient.get(this.allData.abilities[1].ability.url);
+          }
+          return of(true);
+        }),
+        tap((results: any) => {
+          if (typeof results !== 'boolean') {
+            const temp =
+              results.effect_entries[0].language.name === 'en' ? 0 : 1;
+            this.abilityEffects.push(results.effect_entries[temp].effect);
+          }
+        }),
+        mergeMap(() => {
+          if (this.allData && this.allData.abilities[2]) {
+            return this.httpClient.get(this.allData.abilities[2].ability.url);
+          }
+          return of(true);
+        }),
+        tap((results: any) => {
+          if (typeof results !== 'boolean') {
+            const temp =
+              results.effect_entries[0].language.name === 'en' ? 0 : 1;
+            this.abilityEffects.push(results.effect_entries[temp].effect);
           }
         }),
         catchError((error) => {
@@ -119,8 +163,6 @@ export class PokemonComponent implements OnInit {
   }
 
   galleryRotate(direction: 'left' | 'right') {
-    console.log(direction);
-    console.log(this.currentPicIndex);
     let tempIndex = this.currentPicIndex;
     if (direction === 'left') {
       tempIndex--;
@@ -135,7 +177,6 @@ export class PokemonComponent implements OnInit {
     } else {
       this.currentPicIndex = tempIndex;
     }
-    console.log(this.currentPicIndex);
   }
 
   returnPage(): void {
@@ -145,5 +186,15 @@ export class PokemonComponent implements OnInit {
     if (0 < dexNum && dexNum <= CURRENT_POKEMON_TOTAL) {
       this.router.navigateByUrl(`/Pokedex/${dexNum}`);
     }
+  }
+
+  openMoveDialog(url: string): void {
+    console.log(url);
+    const dialogRef = this.dialog.open(MoveDialogComponent, {
+      width: '40%',
+      data: { moveUrl: url },
+    });
+
+    dialogRef.afterClosed().subscribe();
   }
 }

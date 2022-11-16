@@ -60,31 +60,33 @@ export interface Pokemon {
       effort: number;
     };
   };
-  abilities: [
-    {
-      ability: {
-        name: string;
-        url: string;
-      };
-      slot: number;
-      isHidden: boolean;
-    }
-  ];
-  moves: [
-    {
-      move: {
-        name: string;
-        url: string;
-      };
-      version_group: [
-        {
-          levelLearned: number;
-          learnMethod: string;
-          gameVersion: string;
-        }
-      ];
-    }
-  ];
+  abilities: {
+    ability: {
+      name: string;
+      url: string;
+    };
+    slot: number;
+    is_hidden: boolean;
+  }[];
+  moves: {
+    move: {
+      name: string;
+      url: string;
+    };
+    version_group_details: [
+      {
+        level_learned_at: number;
+        move_learn_method: {
+          name: string;
+          url: string;
+        };
+        version_group: {
+          name: string;
+          url: string;
+        };
+      }
+    ];
+  }[];
   sprites: Sprites;
 }
 
@@ -136,7 +138,7 @@ export class PokemonCache {
             url: 'DNE',
           },
           slot: 0,
-          isHidden: false,
+          is_hidden: false,
         },
       ],
       moves: [
@@ -145,11 +147,17 @@ export class PokemonCache {
             name: 'DNE',
             url: 'DNE',
           },
-          version_group: [
+          version_group_details: [
             {
-              levelLearned: 0,
-              learnMethod: 'DNE',
-              gameVersion: 'DNE',
+              level_learned_at: 0,
+              move_learn_method: {
+                name: 'DNE',
+                url: 'DNE',
+              },
+              version_group: {
+                name: 'DNE',
+                url: 'DNE',
+              },
             },
           ],
         },

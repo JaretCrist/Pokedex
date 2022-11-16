@@ -1,5 +1,5 @@
 <div *ngIf="this.allData" class='ms-2 noScroll' id="full-height">
-<div class="row ms-2 me-3 my-3">
+<div class="row ms-2 me-3 my-2">
   <div class="col bg-secondary rounded border border-primary border-5">
     <div class="row d-flex justify-content-center">
       <img src="{{this.picturesList[this.currentPicIndex]}}" class="imageSize">
@@ -45,12 +45,85 @@
     </div>
   </div>
   </div>
-  <div class="row border border-2 border-dark bg-secondary text-white ms-2 me-3 my-3 px-0" id="half-height">
+  <div class="row border border-2 border-dark bg-secondary text-white ms-2 me-3 px-0" id="half-height">
     <div class="header border border-3 bg-dark">
       POKÉMON INFO
     </div>
-    <div id="full-height">
-      text here
+    <div class="vertScroll" id="full-height">
+      <div *ngIf="this.pageView === 'stats'" class="text-end">
+        <div class="row fs-6">
+          <div class="col">
+            <div class="row"><p>&nbsp;</div>
+            <div class="row"><p>HP</p></div>
+            <div class="row"><p>Attack</p></div>
+            <div class="row"><p>Defense</p></div>
+            <div class="row"><p>Sp. Defense</p></div>
+            <div class="row"><p>Sp. Attack</p></div>
+            <div class="row"><p>Speed</p></div>
+          </div>
+          <div class="col border-start border-white">
+            <div class="row"><p>Base Stats</p></div>
+            <div class="row"><p>{{this.allData.stats.hp.base_stat}}</p></div>
+            <div class="row"><p>{{this.allData.stats.atk.base_stat}}</p></div>
+            <div class="row"><p>{{this.allData.stats.def.base_stat}}</p></div>
+            <div class="row"><p>{{this.allData.stats.spAtk.base_stat}}</p></div>
+            <div class="row"><p>{{this.allData.stats.spDef.base_stat}}</p></div>
+            <div class="row"><p>{{this.allData.stats.spd.base_stat}}</p></div>
+          </div>
+          <div class="col border-start border-white">
+            <div class="row"><p>EV Yield</div>
+            <div class="row"><p>{{this.allData.stats.hp.effort !== 0 ? this.allData.stats.hp.effort : '&nbsp;'}}</p></div>
+            <div class="row"><p>{{this.allData.stats.atk.effort !== 0 ? this.allData.stats.atk.effort : '&nbsp;'}}</p></div>
+            <div class="row"><p>{{this.allData.stats.def.effort !== 0 ? this.allData.stats.def.effort : '&nbsp;'}}</p></div>
+            <div class="row"><p>{{this.allData.stats.spAtk.effort !== 0 ? this.allData.stats.spAtk.effort : '&nbsp;'}}</p></div>
+            <div class="row"><p>{{this.allData.stats.spDef.effort !== 0 ? this.allData.stats.spDef.effort : '&nbsp;'}}</p></div>
+            <div class="row"><p>{{this.allData.stats.spd.effort !== 0 ? this.allData.stats.spd.effort : '&nbsp;'}}</p></div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="this.pageView === 'abilities'" class="text-end">
+        <div class="row fs-6">
+          <div class="col">
+            <div class="row"><p>Ability 1</p></div>
+            <div class="row capitalize"><p>{{this.allData.abilities[0].ability.name}}</p></div>
+            <div class="row vertScroll smallFont"><p>{{this.abilityEffects[0]}}</p></div>
+          </div>
+          <div class="col border-start border-white">
+            <div class="row"><p>Ability 2</p></div>
+            <div class="row capitalize"><p>{{this.allData.abilities[1].is_hidden == false ? this.allData.abilities[1].ability.name : '&nbsp;'}}</p></div>
+            <div class="row vertScroll smallFont"><p>{{this.abilityEffects.length === 3 ? this.abilityEffects[1] : this.abilityEffects[2]}}</p></div>
+          </div>
+          <div class="col border-start border-white">
+            <div class="row"><p>Hidden Ability</p></div>
+            <div class="row capitalize"><p>{{this.allData.abilities[2] ? this.allData.abilities[2].ability.name : this.allData.abilities[1].ability.name}}</p></div>
+            <div class="row vertScroll smallFont"><p>{{this.abilityEffects[this.abilityEffects.length - 1]}}</p></div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="this.pageView === 'moves'" class="text-end">
+        <div class="row fs-6 border-bottom border-white mb-1">
+          <div class="col">
+            <div class="row"><p>Move Name</p></div>
+          </div>
+          <div class="col border-start border-white">
+            <div class="row"><p>Learn Level</p></div>
+          </div>
+          <div class="col border-start border-white">
+            <div class="row"><p>Learn Method</p></div>
+          </div>
+        </div>
+        <div class="row fs-6 capitalize" *ngFor="let move of this.allData.moves">
+          <div class="col">
+            <div class="row underline" (click)="openMoveDialog(move.move.url)"><p>{{move.move.name}}</p></div>
+          </div>
+          <div class="col border-start border-white">
+            <div class="row"><p>{{move.version_group_details[0].level_learned_at}}</p></div>
+          </div>
+          <div class="col border-start border-white">
+            <div class="row"><p>{{move.version_group_details[0].move_learn_method.name}}</p></div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
