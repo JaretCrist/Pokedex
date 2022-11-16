@@ -1,1 +1,160 @@
-<p>pokemon works!</p>
+<div *ngIf="this.allData" class='ms-2 noScroll' id="full-height">
+<div class="row ms-2 me-3 my-2">
+  <div class="col bg-secondary rounded border border-primary border-5">
+    <div class="row d-flex justify-content-center">
+      <img src="{{this.picturesList[this.currentPicIndex]}}" class="imageSize">
+    </div>
+    <div class="row">
+      <div class="col d-flex justify-content-center">
+        <img src="../../../assets/Left.png" class="galleryButton justify-content-center" (click)="this.galleryRotate('left')">
+      </div>
+      <div class="col d-flex justify-content-center">
+        <img src="../../../assets/Right.png" class="galleryButton" (click)="this.galleryRotate('right')">
+      </div>
+    </div>
+  </div>
+  <div class="col bg-white border rounded border-dark border-2">
+    <div class="row bg-secondary fs-6 py-2">
+      <div class="col-3">
+        No{{this.allData.id}}
+      </div>
+      <div class="col d-flex justify-content-center capitalize">
+        {{this.allData.name}}
+      </div>
+    </div>
+    <div class="row py-2 my-2 h-80%" id="taller">
+      <div class="col d-flex justify-content-center align-items-center">
+        <app-type-icon class="enlarge" [cached]="[this.allData]" [bypass]="true" [number]="this.allData.id"></app-type-icon>
+      </div>
+    </div>
+    <div class="row fs-6 py-2 border-top border-2">
+      <div class="col-3">
+        HT
+      </div>
+      <div class="col d-flex justify-content-end">
+        {{this.allData.height}}"
+      </div>
+    </div>
+    <div class="row fs-6 py-2">
+      <div class="col-3">
+        WT
+      </div>
+      <div class="col d-flex justify-content-end">
+        {{this.allData.weight}}lbs
+      </div>
+    </div>
+  </div>
+  </div>
+  <div class="row border border-2 border-dark bg-secondary text-white ms-2 me-3 px-0" id="half-height">
+    <div class="header border border-3 bg-dark">
+      POKÉMON INFO
+    </div>
+    <div class="vertScroll" id="full-height">
+      <div *ngIf="this.pageView === 'stats'" class="text-end">
+        <div class="row fs-6">
+          <div class="col">
+            <div class="row"><p>&nbsp;</div>
+            <div class="row"><p>HP</p></div>
+            <div class="row"><p>Attack</p></div>
+            <div class="row"><p>Defense</p></div>
+            <div class="row"><p>Sp. Defense</p></div>
+            <div class="row"><p>Sp. Attack</p></div>
+            <div class="row"><p>Speed</p></div>
+          </div>
+          <div class="col border-start border-white">
+            <div class="row"><p>Base Stats</p></div>
+            <div class="row"><p>{{this.allData.stats.hp.base_stat}}</p></div>
+            <div class="row"><p>{{this.allData.stats.atk.base_stat}}</p></div>
+            <div class="row"><p>{{this.allData.stats.def.base_stat}}</p></div>
+            <div class="row"><p>{{this.allData.stats.spAtk.base_stat}}</p></div>
+            <div class="row"><p>{{this.allData.stats.spDef.base_stat}}</p></div>
+            <div class="row"><p>{{this.allData.stats.spd.base_stat}}</p></div>
+          </div>
+          <div class="col border-start border-white">
+            <div class="row"><p>EV Yield</div>
+            <div class="row"><p>{{this.allData.stats.hp.effort !== 0 ? this.allData.stats.hp.effort : '&nbsp;'}}</p></div>
+            <div class="row"><p>{{this.allData.stats.atk.effort !== 0 ? this.allData.stats.atk.effort : '&nbsp;'}}</p></div>
+            <div class="row"><p>{{this.allData.stats.def.effort !== 0 ? this.allData.stats.def.effort : '&nbsp;'}}</p></div>
+            <div class="row"><p>{{this.allData.stats.spAtk.effort !== 0 ? this.allData.stats.spAtk.effort : '&nbsp;'}}</p></div>
+            <div class="row"><p>{{this.allData.stats.spDef.effort !== 0 ? this.allData.stats.spDef.effort : '&nbsp;'}}</p></div>
+            <div class="row"><p>{{this.allData.stats.spd.effort !== 0 ? this.allData.stats.spd.effort : '&nbsp;'}}</p></div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="this.pageView === 'abilities'" class="text-end">
+        <div class="row fs-6">
+          <div class="col">
+            <div class="row"><p>Ability 1</p></div>
+            <div class="row capitalize"><p>{{this.allData.abilities[0].ability.name}}</p></div>
+            <div class="row vertScroll smallFont"><p>{{this.abilityEffects[0]}}</p></div>
+          </div>
+          <div class="col border-start border-white">
+            <div class="row"><p>Ability 2</p></div>
+            <div class="row capitalize"><p>{{this.allData.abilities[1].is_hidden === false ? this.allData.abilities[1].ability.name : '&nbsp;'}}</p></div>
+            <div class="row vertScroll smallFont"><p>{{this.abilityEffects.length === 3 ? this.abilityEffects[1] : this.abilityEffects[2]}}</p></div>
+          </div>
+          <div class="col border-start border-white">
+            <div class="row"><p>Hidden Ability</p></div>
+            <div class="row capitalize"><p>{{this.allData.abilities[2] ? this.allData.abilities[2].ability.name : this.allData.abilities[1].ability.name}}</p></div>
+            <div class="row vertScroll smallFont"><p>{{this.abilityEffects[this.abilityEffects.length - 1]}}</p></div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="this.pageView === 'moves'" class="text-end">
+        <div class="row fs-6 border-bottom border-white mb-1">
+          <div class="col">
+            <div class="row"><p>Move Name</p></div>
+          </div>
+          <div class="col border-start border-white">
+            <div class="row"><p>Learn Level</p></div>
+          </div>
+          <div class="col border-start border-white">
+            <div class="row"><p>Learn Method</p></div>
+          </div>
+        </div>
+        <div class="row fs-6 capitalize" *ngFor="let move of this.allData.moves">
+          <div class="col">
+            <div class="row underline" (click)="openMoveDialog(move.move.url)"><p>{{move.move.name}}</p></div>
+          </div>
+          <div class="col border-start border-white">
+            <div class="row"><p>{{move.version_group_details[0].level_learned_at}}</p></div>
+          </div>
+          <div class="col border-start border-white">
+            <div class="row"><p>{{move.version_group_details[0].move_learn_method.name}}</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row app-toolbar border border-dark align-items-center justify-content-center noScroll">
+    <div class="col-2">
+      <img class="tool-buttons" src="../../../assets/Up.png" (click)="this.allData && this.allData.id && navigate(this.allData.id - 1)">
+    </div>
+    <div class="col-2">
+      <img class="tool-buttons" src="../../../assets/Down.png" (click)="this.allData && this.allData.id && navigate(this.allData.id + 1)">
+    </div>
+    <div class="col">
+      <div class="row text-white">
+        <div class="col">
+          <button mat-button class="border border-3 view-select" (click)="this.pageView = 'stats'">
+            STATS
+          </button>
+        </div>
+        <div class="col">
+          <button mat-button class="border border-3 view-select" (click)="this.pageView = 'abilities'">
+            ABLTES
+          </button>
+        </div>
+        <div class="col">
+          <button mat-button class="border border-3 view-select" (click)="this.pageView = 'moves'">
+            MOVES
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="col-2">
+      <img class="tool-buttons" src="../../../assets/return.png" (click)="returnPage()">
+    </div>
+  </div>
+</div>

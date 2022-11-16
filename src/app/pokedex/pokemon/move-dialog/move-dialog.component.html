@@ -1,0 +1,80 @@
+<div mat-dialog-content class="capital">
+  <div *ngIf="this.moveData">
+    <div class="fs-5 underline mb-3">
+      {{this.moveData.name}}
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="row">
+          <div class="text-start">
+            Type
+          </div>
+          <div class="text-end">
+            {{this.moveData.type.name}}
+          </div>
+          <div class="text-start">
+            Target
+          </div>
+          <div class="text-end">
+            {{this.moveData.target.name}}
+          </div>
+          <div class="text-start">
+            Priority
+          </div>
+          <div class="text-end">
+            {{this.moveData.priority}}
+          </div>
+          <div class="text-start">
+            Class
+          </div>
+          <div class="text-end">
+            {{this.moveData.damage_class.name}}
+          </div>
+        </div>
+      </div>
+      <div class="col border-start border-white">
+        <div class="row">
+          <div class="text-start">
+            Power
+          </div>
+          <div class="text-end">
+            {{this.moveData.power ? this.moveData.power : "-"}}
+          </div>
+          <div class="text-start">
+            Acc
+          </div>
+          <div class="text-end">
+            {{this.moveData.accuracy ? this.moveData.accuracy : "-"}}
+          </div>
+          <div class="text-start">
+            PP
+          </div>
+          <div class="text-end">
+            {{this.moveData.pp}}
+          </div>
+        </div>
+      </div>
+      <div class="col border-start border-white">
+        <div class="row">
+          <div class="text-start">
+            Stat Changes
+          </div>
+          <div class="text-end" *ngIf="this.moveData.stat_changes.length === 0">
+            &nbsp;
+          </div>
+          <div class="text-end" *ngFor="let statChange of this.moveData.stat_changes">
+            {{statChange.change}} {{statChange.stat.name}}
+          </div>
+          <div class="text-start">
+            Status Effects
+          </div>
+          <div class="text-end">
+            {{this.moveData.meta.ailment.name}}
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+<div mat-dialog-actions [align]="'end'">
+  <button mat-icon-button (click)="this.dialogRef.close()"><mat-icon>close</mat-icon></button>
+</div>
